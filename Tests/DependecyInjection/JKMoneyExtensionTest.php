@@ -22,8 +22,8 @@ class JKMoneyExtensionTest extends TestCase
     public function testLoadConfiguration()
     {
         $container = new ContainerBuilder();
+        $container->setParameter('kernel.default_locale', 'cs');
         $loader = new JKMoneyExtension();
-        $container->setParameter('locale', 'z');
         $config = [];
         $loader->load(array($config), $container);
         $this->assertTrue($container->hasDefinition('JK\MoneyBundle\Form\Type\MoneyType'));
