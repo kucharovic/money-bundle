@@ -1,7 +1,7 @@
 {
   "name": "kucharovic/money-bundle",
   "type": "symfony-bundle",
-  "description": "This bundle provides integration for Money library in your Symfony2 project.",
+  "description": "This bundle provides integration for Money library in your Symfony project.",
   "keywords": [
     "php",
     "money",
