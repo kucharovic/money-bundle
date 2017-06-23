@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="JK\MoneyBundle\Form\Type\MoneyType" public="false">
+            <argument></argument>
+            <tag name="form.type" />
+        </service>
+        <service id="JK\MoneyBundle\Twig\MoneyExtension" public="false">
+            <argument></argument>
+            <tag name="twig.extension" />
+        </service>
+    </services>
+</container>

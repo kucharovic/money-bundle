@@ -1,0 +1,41 @@
+{
+  "name": "kucharovic/money-bundle",
+  "type": "symfony-bundle",
+  "description": "This bundle provides integration for Money library in your Symfony2 project.",
+  "keywords": [
+    "php",
+    "money",
+    "moneyphp",
+    "symfony",
+    "bundle",
+    "doctrine",
+    "twig"
+  ],
+  "homepage": "https://github.com/kucharovic/money-bundle",
+  "license": "MIT",
+  "authors": [
+    {
+        "name": "Jakub Kucharovic",
+        "email": "jakub@kucharovic.cz"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "JK\\MoneyBundle\\": ""
+    },
+    "exclude-from-classmap": [
+      "/Tests/"
+    ]
+  },
+  "require": {
+    "php": ">=5.5.9",
+    "ext-intl": "*",
+    "symfony/framework-bundle": "^3.0",
+    "symfony/form": "^3.0",
+    "moneyphp/money": "^3.0",
+    "twig/twig": "~1.30 || ~2.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.3|~5.0"
+  }
+}
