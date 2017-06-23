@@ -19,6 +19,18 @@ class JKMoneyExtensionTest extends TestCase
         $loader->load(array($config), $container);
     }
 
+    /**
+     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
+     */
+    public function testInvalidConfigurationException()
+    {
+        $container = new ContainerBuilder();
+        $container->setParameter('kernel.default_locale', 'xx');
+        $loader = new JKMoneyExtension();
+        $config = [];
+        $loader->load(array($config), $container);
+    }
+
     public function testLoadConfiguration()
     {
         $container = new ContainerBuilder();

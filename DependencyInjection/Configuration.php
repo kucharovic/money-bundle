@@ -4,6 +4,8 @@ namespace JK\MoneyBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
+use Symfony\Component\Intl\Intl;
 use NumberFormatter;
 
 /**
@@ -21,6 +23,17 @@ class Configuration implements ConfigurationInterface
      */
     public function  __construct($locale)
     {
+        $locales = Intl::getLanguageBundle()->getLocales();
+
+        if (false === in_array($locale, $locales)) {
+            throw new InvalidConfigurationException("Locale '$locale' is not valid.");
+        }
+
+        if (2 == strlen($locale)) {
+            // Default US dollars
+            $locale .= '_US';
+        }
+
         $formatter = new NumberFormatter($locale, NumberFormatter::CURRENCY);
         $this->currencyCode = $formatter->getTextAttribute(NumberFormatter::CURRENCY_CODE);
     }
