@@ -32,6 +32,7 @@
     "ext-intl": "*",
     "symfony/framework-bundle": "^3.0",
     "symfony/form": "^3.0",
+    "doctrine/orm": "^2.5",
     "moneyphp/money": "^3.0",
     "twig/twig": "~1.30 || ~2.0"
   },

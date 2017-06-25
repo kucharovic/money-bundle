@@ -3,7 +3,7 @@
 This bundle provides integration for [Money](https://github.com/moneyphp/money) library in your Symfony
 project. Features include:
 
- - Automatically add doctrine mappings
+ - Automatically add Doctrine mappings (use Doctrine embeddable objects)
  - Customized FormType
  - Twig extension
 
