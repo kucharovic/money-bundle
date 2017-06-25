@@ -112,6 +112,26 @@ class Product
     }
 ```
 
+This entity mapping produces following table structure:
+```
++---------------------+--------------+------+-----+---------+----------------+
+| Field               | Type         | Null | Key | Default | Extra          |
++---------------------+--------------+------+-----+---------+----------------+
+| id                  | int(11)      | NO   | PRI | NULL    | auto_increment |
+| name                | varchar(255) | NO   |     | NULL    |                |
+| price_amount        | varchar(255) | NO   |     | NULL    |                |
+| price_currency_code | char(3)      | NO   |     | NULL    |                |
++---------------------+--------------+------+-----+---------+----------------+
+```
+
+So it's easy to query database using aggregate functions like `SUM`, `AVG`, etc:
+
+```sql
+SELECT MAX(`price_amount`), `price_currency_code`
+FROM `product`
+GROUP BY `price_currency_code`;
+```
+
 ### Form
 
 | Option  | Type | Default |
