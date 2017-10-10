@@ -20,7 +20,8 @@ class JKMoneyExtension extends Extension implements PrependExtensionInterface
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $configuration = new Configuration($container->getParameter('kernel.default_locale'));
+        $locale = $container->getParameter('kernel.default_locale');
+        $configuration = new Configuration($locale);
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
@@ -30,7 +31,7 @@ class JKMoneyExtension extends Extension implements PrependExtensionInterface
         $formType->replaceArgument(0, $config['currency']);
 
         $twigExtension = $container->getDefinition('JK\MoneyBundle\Twig\MoneyExtension');
-        $twigExtension->replaceArgument(0, $config['currency']);
+        $twigExtension->replaceArgument(0, $locale);
     }
 
     /**
