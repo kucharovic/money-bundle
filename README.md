@@ -15,7 +15,7 @@ Open a command console, enter your project directory and execute the
 following command to download the latest stable version of this bundle:
 
 ```console
-$ composer require kucharovic/money-bundle "^1.0"
+$ composer require kucharovic/money-bundle
 ```
 
 This command requires you to have Composer installed globally, as explained
@@ -36,11 +36,11 @@ class AppKernel extends Kernel
 {
     public function registerBundles()
     {
-        $bundles = array(
+        $bundles = [
             // ...
 
             new JK\MoneyBundle\JKMoneyBundle(),
-        );
+        ];
 
         // ...
     }
@@ -76,7 +76,7 @@ class Product
     // ...
 
     /**
-     * @var \Money\Money
+     * @var Money
      *
      * @ORM\Embedded(class="Money\Money")
      */
@@ -89,24 +89,12 @@ class Product
         $this->price = Money::CZK(0);
     }
 
-    /**
-     * Set price
-     *
-     * @param \Money\Money $price
-     *
-     * @return Product
-     */
-    public function setPrice(\Money\Money $price)
+    public function setPrice(Money $price): void
     {
         $this->price = $price;
     }
 
-    /**
-     * Get price
-     *
-     * @return \Money\Money
-     */
-    public function getPrice()
+    public function getPrice(): Money
     {
         return $this->price;
     }
