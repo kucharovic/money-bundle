@@ -10,7 +10,7 @@ use Money\Parser\DecimalMoneyParser;
 use Money\Formatter\DecimalMoneyFormatter;
 use Money\Currency;
 use Money\Money;
-use NumberFormatter, Locale;
+use Locale;
 
 /**
  * Transforms between a normalized format and a localized money string.
@@ -23,8 +23,6 @@ class MoneyToLocalizedStringTransformer extends NumberToLocalizedStringTransform
     private $currencyCode;
     /** @var \Money\Parser\DecimalMoneyParser **/
     private $moneyParser;
-    /** @var \NumberFormatter **/
-    private $numberFormatter;
 
     /**
      * @param string $currencyCode ISO currency code
@@ -33,7 +31,6 @@ class MoneyToLocalizedStringTransformer extends NumberToLocalizedStringTransform
      */
     public function __construct($currencyCode, $scale, $grouping)
     {
-        $this->numberFormatter = new NumberFormatter(Locale::getDefault(), NumberFormatter::DECIMAL);
         $this->moneyParser = new DecimalMoneyParser(new ISOCurrencies());
         $this->currencyCode = $currencyCode;
 
