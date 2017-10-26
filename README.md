@@ -1,3 +1,7 @@
+[![GitHub Release](https://img.shields.io/github/release/kucharovic/money-bundle.svg?style=flat-square)](https://github.com/kucharovic/money-bundle/releases)
+[![Total Downloads](https://img.shields.io/packagist/dt/kucharovic/money-bundle.svg?style=flat-square)](https://packagist.org/packages/kucharovic/money-bundle)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
+
 # JKMoneyBundle
 
 This bundle provides integration for [Money](https://github.com/moneyphp/money) library in your Symfony
