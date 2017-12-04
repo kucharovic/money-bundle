@@ -1,4 +1,5 @@
 [![GitHub Release](https://img.shields.io/github/release/kucharovic/money-bundle.svg?style=flat-square)](https://github.com/kucharovic/money-bundle/releases)
+[![Travis](https://img.shields.io/travis/rust-lang/rust.svg?style=flat-square)](https://travis-ci.org/kucharovic/money-bundle)
 [![Total Downloads](https://img.shields.io/packagist/dt/kucharovic/money-bundle.svg?style=flat-square)](https://packagist.org/packages/kucharovic/money-bundle)
 [![SensioLabs Insight](https://img.shields.io/sensiolabs/i/1b2167ed-01ee-42fe-92a0-6c3ac766fc78.svg?style=flat-square)](https://insight.sensiolabs.com/projects/1b2167ed-01ee-42fe-92a0-6c3ac766fc78)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
