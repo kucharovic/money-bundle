@@ -27,16 +27,24 @@
       "/Tests/"
     ]
   },
+  "conflict": {
+    "symfony/form": "<3.0",
+    "twig/twig": "<1.30"
+  },
   "require": {
     "php": "^5.5.9 || ^7.0",
     "ext-intl": "*",
     "symfony/framework-bundle": "^3.0 || ^4.0",
-    "symfony/form": "^3.0 || ^4.0",
     "doctrine/orm": "^2.5",
-    "moneyphp/money": "^3.0",
-    "twig/twig": "^1.30 || ^2.0"
+    "moneyphp/money": "^3.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^4.8 || ^5.0"
+    "phpunit/phpunit": "^4.8 || ^5.0",
+    "symfony/form": "^3.0 || ^4.0",
+    "twig/twig": "^1.30 || ^2.0"    
+  },
+  "suggest": {
+    "twig/twig": "To use Twig filter to display Money object in your templates",
+    "symfony/form": "To use Symfony FormType for handling Money data"
   }
 }
