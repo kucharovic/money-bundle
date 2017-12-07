@@ -27,11 +27,15 @@ class JKMoneyExtension extends Extension implements PrependExtensionInterface
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
 
-        $formType = $container->getDefinition('JK\MoneyBundle\Form\Type\MoneyType');
-        $formType->replaceArgument(0, $config['currency']);
+        if (interface_exists('Symfony\Component\Form\FormInterface')) {
+            $formType = $container->getDefinition('JK\MoneyBundle\Form\Type\MoneyType');
+            $formType->replaceArgument(0, $config['currency']);
+        }
 
-        $twigExtension = $container->getDefinition('JK\MoneyBundle\Twig\MoneyExtension');
-        $twigExtension->replaceArgument(0, $locale);
+        if (interface_exists('Twig_ExtensionInterface')) {
+            $twigExtension = $container->getDefinition('JK\MoneyBundle\Twig\MoneyExtension');
+            $twigExtension->replaceArgument(0, $locale);
+        }
     }
 
     /**
