@@ -8,7 +8,7 @@ use Money\Exception\ParserException;
 use Money\Currencies\ISOCurrencies;
 use Money\Parser\DecimalMoneyParser;
 use Money\Formatter\DecimalMoneyFormatter;
-use Money\Currency;
+use Money\Currencies;
 use Money\Money;
 use Locale;
 
@@ -21,18 +21,19 @@ class MoneyToLocalizedStringTransformer extends NumberToLocalizedStringTransform
 {
     /** @var string ISO currency code **/
     private $currencyCode;
-    /** @var \Money\Parser\DecimalMoneyParser **/
-    private $moneyParser;
+    /** @var \Money\Currencies|null */
+    private $currencies;
 
     /**
-     * @param string $currencyCode ISO currency code
-     * @param int    $scale
-     * @param bool   $grouping
+     * @param string                 $currencyCode ISO currency code
+     * @param int                    $scale
+     * @param bool                   $grouping
+     * @param \Money\Currencies|null $currencies
      */
-    public function __construct($currencyCode, $scale, $grouping)
+    public function __construct($currencyCode, $scale, $grouping, Currencies $currencies = null)
     {
-        $this->moneyParser = new DecimalMoneyParser(new ISOCurrencies());
         $this->currencyCode = $currencyCode;
+        $this->currencies = $currencies ?: new ISOCurrencies();
 
         parent::__construct($scale, $grouping);
     }
@@ -53,7 +54,7 @@ class MoneyToLocalizedStringTransformer extends NumberToLocalizedStringTransform
             return '';
         }
 
-        $moneyFormatter = new DecimalMoneyFormatter(new ISOCurrencies());
+        $moneyFormatter = new DecimalMoneyFormatter($this->currencies);
 
         return parent::transform($moneyFormatter->format($value));
     }
@@ -72,8 +73,10 @@ class MoneyToLocalizedStringTransformer extends NumberToLocalizedStringTransform
     {
         $value = parent::reverseTransform($value);
 
+        $moneyParser = new DecimalMoneyParser($this->currencies);
+
         try {
-            $money = $this->moneyParser->parse(strval($value), $this->currencyCode);
+            $money = $moneyParser->parse(strval($value), $this->currencyCode);
             return $money;
         } catch (ParserException $e) {
             throw new TransformationFailedException($e->getMessage());
