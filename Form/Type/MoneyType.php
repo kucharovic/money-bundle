@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use JK\MoneyBundle\Form\DataTransformer\MoneyToLocalizedStringTransformer;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Money\Currencies;
 use Money\Money;
 use NumberFormatter, Locale;
 
@@ -38,7 +39,8 @@ class MoneyType extends AbstractType
             ->addViewTransformer(new MoneyToLocalizedStringTransformer(
                 $options['currency'],
                 $options['scale'],
-                $options['grouping']
+                $options['grouping'],
+                $options['currencies']
             ))
         ;
     }
@@ -60,8 +62,10 @@ class MoneyType extends AbstractType
             'currency' => $this->currencyCode,
             'scale' => 2,
             'grouping' => false,
-            'compound' => false
+            'compound' => false,
+            'currencies' => null
         ));
+        $resolver->setAllowedTypes('currencies', array('null', Currencies::class));
     }
 
     /**
