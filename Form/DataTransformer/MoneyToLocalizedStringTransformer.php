@@ -76,7 +76,7 @@ class MoneyToLocalizedStringTransformer extends NumberToLocalizedStringTransform
         $moneyParser = new DecimalMoneyParser($this->currencies);
 
         try {
-            $money = $moneyParser->parse(strval($value), $this->currencyCode);
+            $money = $moneyParser->parse(sprintf('%.53f', $value), $this->currencyCode);
             return $money;
         } catch (ParserException $e) {
             throw new TransformationFailedException($e->getMessage());

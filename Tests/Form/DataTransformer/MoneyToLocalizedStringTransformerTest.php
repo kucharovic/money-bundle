@@ -31,6 +31,7 @@ class MoneyToLocalizedStringTransformerTest extends TestCase
             ['en_US', 'USD', 2, true,  999999, '9,999.99', null],
             ['en_US', 'USD', 2, true,  999999, '9,999.99', null],
             ['en_US', 'XBT', 8, true,  999999, '0.00999999', new BitcoinCurrencies()],
+            ['en_US', 'XBT', 8, true,  1, '0.00000001', new BitcoinCurrencies()],
         ];
 
         return $data;
