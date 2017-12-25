@@ -24,7 +24,7 @@ class JKMoneyExtension extends Extension implements PrependExtensionInterface
 		$configuration = new Configuration($locale);
 		$config = $this->processConfiguration($configuration, $configs);
 
-		$loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+		$loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 		$loader->load('services.xml');
 
 		if (interface_exists('Symfony\Component\Form\FormInterface')) {
