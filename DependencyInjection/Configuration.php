@@ -19,7 +19,7 @@ class Configuration implements ConfigurationInterface
 	private $currencyCode;
 
 	/**
-	 * @param string locale for currency code
+	 * @param string $locale Locale for currency code
 	 */
 	public function  __construct($locale)
 	{
