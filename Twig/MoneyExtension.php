@@ -16,35 +16,35 @@ use Money\Formatter\DecimalMoneyFormatter;
  */
 class MoneyExtension extends Twig_Extension
 {
-    const FORMAT_CURRENCY = true;
-    const FORMAT_DECIMAL  = false;
+	const FORMAT_CURRENCY = true;
+	const FORMAT_DECIMAL  = false;
 
-    const GROUPING_USED = true;
-    const GROUPING_NONE = false;
+	const GROUPING_USED = true;
+	const GROUPING_NONE = false;
 
-    private $locale;
+	private $locale;
 
-    public function __construct($locale)
-    {
-        $this->locale = $locale;
-    }
+	public function __construct($locale)
+	{
+		$this->locale = $locale;
+	}
 
-    public function getFilters()
-    {
-        return [
-            new Twig_SimpleFilter('money', [$this, 'moneyFilter']),
-        ];
-    }
+	public function getFilters()
+	{
+		return [
+			new Twig_SimpleFilter('money', [$this, 'moneyFilter']),
+		];
+	}
 
-    public function moneyFilter(Money $money, $scale = 2, $groupingUsed = self::GROUPING_USED, $format = self::FORMAT_CURRENCY)
-    {
-        $noFormatter = new NumberFormatter($this->locale, $format === self::FORMAT_CURRENCY ? NumberFormatter::CURRENCY : NumberFormatter::DECIMAL);
-        $noFormatter->setAttribute(NumberFormatter::GROUPING_USED, $groupingUsed);
-        $noFormatter->setAttribute(NumberFormatter::FRACTION_DIGITS, $scale);
+	public function moneyFilter(Money $money, $scale = 2, $groupingUsed = self::GROUPING_USED, $format = self::FORMAT_CURRENCY)
+	{
+		$noFormatter = new NumberFormatter($this->locale, $format === self::FORMAT_CURRENCY ? NumberFormatter::CURRENCY : NumberFormatter::DECIMAL);
+		$noFormatter->setAttribute(NumberFormatter::GROUPING_USED, $groupingUsed);
+		$noFormatter->setAttribute(NumberFormatter::FRACTION_DIGITS, $scale);
 
-        $intlFormatter = new IntlMoneyFormatter($noFormatter, new ISOCurrencies());
+		$intlFormatter = new IntlMoneyFormatter($noFormatter, new ISOCurrencies());
 
-        // replace non-break spaces with ascii spaces
-        return str_replace("\xc2\xa0", "\x20", $intlFormatter->format($money));
-    }
+		// replace non-break spaces with ascii spaces
+		return str_replace("\xc2\xa0", "\x20", $intlFormatter->format($money));
+	}
 }
