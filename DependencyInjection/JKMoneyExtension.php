@@ -15,43 +15,43 @@ use Symfony\Component\DependencyInjection\Loader;
  */
 class JKMoneyExtension extends Extension implements PrependExtensionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function load(array $configs, ContainerBuilder $container)
-    {
-        $locale = $container->getParameter('kernel.default_locale');
-        $configuration = new Configuration($locale);
-        $config = $this->processConfiguration($configuration, $configs);
+	/**
+	 * {@inheritdoc}
+	 */
+	public function load(array $configs, ContainerBuilder $container)
+	{
+		$locale = $container->getParameter('kernel.default_locale');
+		$configuration = new Configuration($locale);
+		$config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.xml');
+		$loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+		$loader->load('services.xml');
 
-        if (interface_exists('Symfony\Component\Form\FormInterface')) {
-            $formType = $container->getDefinition('JK\MoneyBundle\Form\Type\MoneyType');
-            $formType->replaceArgument(0, $config['currency']);
-        }
+		if (interface_exists('Symfony\Component\Form\FormInterface')) {
+			$formType = $container->getDefinition('JK\MoneyBundle\Form\Type\MoneyType');
+			$formType->replaceArgument(0, $config['currency']);
+		}
 
-        if (interface_exists('Twig_ExtensionInterface')) {
-            $twigExtension = $container->getDefinition('JK\MoneyBundle\Twig\MoneyExtension');
-            $twigExtension->replaceArgument(0, $locale);
-        }
-    }
+		if (interface_exists('Twig_ExtensionInterface')) {
+			$twigExtension = $container->getDefinition('JK\MoneyBundle\Twig\MoneyExtension');
+			$twigExtension->replaceArgument(0, $locale);
+		}
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function prepend(ContainerBuilder $container)
-    {
-        $container->prependExtensionConfig('doctrine', [
-           'orm' => [
-               'mappings' => [
-                   'JKMoneyBundle' => [
-                       'type' => 'xml',
-                       'prefix' => 'Money'
-                   ]
-               ]
-           ]
-        ]);
-    }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function prepend(ContainerBuilder $container)
+	{
+		$container->prependExtensionConfig('doctrine', [
+		   'orm' => [
+			   'mappings' => [
+				   'JKMoneyBundle' => [
+					   'type' => 'xml',
+					   'prefix' => 'Money'
+				   ]
+			   ]
+		   ]
+		]);
+	}
 }
