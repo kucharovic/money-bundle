@@ -9,6 +9,7 @@ use Money\Currencies\ISOCurrencies;
 use Money\Parser\DecimalMoneyParser;
 use Money\Formatter\DecimalMoneyFormatter;
 use Money\Currencies;
+use Money\Currency;
 use Money\Money;
 use Locale;
 
@@ -19,20 +20,24 @@ use Locale;
  */
 class MoneyToLocalizedStringTransformer extends NumberToLocalizedStringTransformer
 {
-	/** @var string ISO currency code **/
-	private $currencyCode;
+	/** @var \Money\Currency **/
+	private $currency;
 	/** @var \Money\Currencies|null */
 	private $currencies;
 
 	/**
-	 * @param string                 $currencyCode ISO currency code
+	 * @param \Money\Currency|string $currency
 	 * @param int                    $scale
 	 * @param bool                   $grouping
 	 * @param \Money\Currencies|null $currencies
 	 */
-	public function __construct($currencyCode, $scale, $grouping, Currencies $currencies = null)
+	public function __construct($currency, $scale, $grouping, Currencies $currencies = null)
 	{
-		$this->currencyCode = $currencyCode;
+		if (!$currency instanceof Currency) {
+			@trigger_error('Passing a currency as string is deprecated since 1.1 and will be removed in 2.0. Please pass a '.Currency::class.' instance instead.', E_USER_DEPRECATED);
+			$currency = new Currency($currency);
+		}
+		$this->currency = $currency;
 		$this->currencies = $currencies ?: new ISOCurrencies();
 
 		parent::__construct($scale, $grouping);
@@ -76,7 +81,7 @@ class MoneyToLocalizedStringTransformer extends NumberToLocalizedStringTransform
 		$moneyParser = new DecimalMoneyParser($this->currencies);
 
 		try {
-			$money = $moneyParser->parse(sprintf('%.53f', $value), $this->currencyCode);
+			$money = $moneyParser->parse(sprintf('%.53f', $value), $this->currency);
 			return $money;
 		} catch (ParserException $e) {
 			throw new TransformationFailedException($e->getMessage());
