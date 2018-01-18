@@ -9,7 +9,7 @@ use JK\MoneyBundle\Form\DataTransformer\MoneyToLocalizedStringTransformer;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Money\Currencies;
-use Money\Money;
+use Money\Currency;
 use NumberFormatter, Locale;
 
 /**
@@ -17,8 +17,8 @@ use NumberFormatter, Locale;
  */
 class MoneyType extends AbstractType
 {
-	/** @var string ISO currency code **/
-	protected $currencyCode;
+	/** @var \Money\Currency **/
+	protected $currency;
 
 	protected static $patterns = array();
 
@@ -27,7 +27,7 @@ class MoneyType extends AbstractType
 	 */
 	public function __construct($currencyCode)
 	{
-		$this->currencyCode = $currencyCode;
+		$this->currency = new Currency($currencyCode);
 	}
 
 	/**
@@ -50,7 +50,7 @@ class MoneyType extends AbstractType
 	 */
 	public function buildView(FormView $view, FormInterface $form, array $options)
 	{
-		$view->vars['money_pattern'] = self::getPattern($options['currency']);
+		$view->vars['money_pattern'] = self::getPattern($options['currency']->getCode());
 	}
 
 	/**
@@ -59,12 +59,21 @@ class MoneyType extends AbstractType
 	public function configureOptions(OptionsResolver $resolver)
 	{
 		$resolver->setDefaults(array(
-			'currency' => $this->currencyCode,
+			'currency' => $this->currency,
 			'scale' => 2,
 			'grouping' => false,
 			'compound' => false,
 			'currencies' => null
 		));
+		$resolver->setNormalizer('currency', function (OptionsResolver $resolver, $currency) {
+			if (!$currency instanceof Currency) {
+				@trigger_error('Passing a currency as string is deprecated since 1.1 and will be removed in 2.0. Please pass a '.Currency::class.' instance instead.', E_USER_DEPRECATED);
+				$currency = new Currency($currency);
+			}
+
+			return $currency;
+		});
+		$resolver->setAllowedTypes('currency', array('string', Currency::class));
 		$resolver->setAllowedTypes('currencies', array('null', Currencies::class));
 	}
 
