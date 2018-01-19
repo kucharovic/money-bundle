@@ -2,11 +2,12 @@
 
 namespace JK\MoneyBundle\Tests\Form\Type;
 
-use Money\Money;
+use Money\Currency;
 use JK\MoneyBundle\Form\Type\MoneyType;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Intl\Util\IntlTestHelper;
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Locale;
 
 /**
@@ -52,10 +53,22 @@ class MoneyTypeTest extends TypeTestCase
 		$this->assertSame('{{ widget }} Kč', $view->vars['money_pattern']);
 	}
 
-	public function testPassOverridenMoneyPatternToView()
+	public function testPassOverriddenMoneyPatternToView()
 	{
-		$view = $this->factory->create(MoneyType::class, null, ['currency' => 'EUR'])->createView();
+		$view = $this->factory->create(MoneyType::class, null, ['currency' => new Currency('EUR')])->createView();
 
 		$this->assertSame('€ {{ widget }}', $view->vars['money_pattern']);
 	}
+
+	public function testPassWrongTypedCurrency()
+    {
+        $this->expectException(InvalidOptionsException::class);
+        $this->factory->create(MoneyType::class, null, ['currency' => 123]);
+    }
+
+	public function testPassWrongTypedCurrencies()
+    {
+        $this->expectException(InvalidOptionsException::class);
+        $this->factory->create(MoneyType::class, null, ['currencies' => ['EUR']]);
+    }
 }
