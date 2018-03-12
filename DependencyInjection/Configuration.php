@@ -7,6 +7,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Intl\Intl;
 use NumberFormatter;
+use ResourceBundle;
 
 /**
  * This class contains the configuration information for the bundle.
@@ -23,7 +24,9 @@ class Configuration implements ConfigurationInterface
 	 */
 	public function  __construct($locale)
 	{
-		$locales = Intl::getLanguageBundle()->getLocales();
+		$locales = class_exists(ResourceBundle::class)
+			? ResourceBundle::getLocales('')
+			: Intl::getLanguageBundle()->getLocales();
 
 		if (false === in_array($locale, $locales)) {
 			throw new InvalidConfigurationException("Locale '$locale' is not valid.");
