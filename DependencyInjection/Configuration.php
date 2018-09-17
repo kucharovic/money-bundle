@@ -4,10 +4,6 @@ namespace JK\MoneyBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
-use Symfony\Component\Intl\Intl;
-use NumberFormatter;
-use ResourceBundle;
 
 /**
  * This class contains the configuration information for the bundle.
@@ -26,7 +22,7 @@ class Configuration implements ConfigurationInterface
 
 		$rootNode
 			->children()
-				->scalarNode('currency')->defaultValue('USD')->end()
+				->scalarNode('currency')->isRequired()->end()
 			->end();
 		;
 

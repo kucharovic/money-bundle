@@ -19,6 +19,19 @@ class JKMoneyExtensionTest extends TestCase
         $loader->load(array($config), $container);
     }
 
+	public function testLoadWithMissingCurrencyValue()
+    {
+        $container = new ContainerBuilder();
+        $container->setParameter('kernel.default_locale', 'cs');
+        $loader = new JKMoneyExtension();
+        $config = [];
+
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('The child node "currency" at path "jk_money" must be configured.');
+
+        $loader->load(array($config), $container);
+    }
+
 	public function testLoadFormConfiguration()
 	{
 		if (false === interface_exists('Twig_ExtensionInterface')) {
@@ -27,7 +40,7 @@ class JKMoneyExtensionTest extends TestCase
 		$container = new ContainerBuilder();
 		$container->setParameter('kernel.default_locale', 'cs');
 		$loader = new JKMoneyExtension();
-		$config = [];
+		$config = ['currency' => 'USD'];
 		$loader->load(array($config), $container);
 		$this->assertTrue($container->hasDefinition('JK\MoneyBundle\Form\Type\MoneyType'));
 	}
@@ -40,7 +53,7 @@ class JKMoneyExtensionTest extends TestCase
         $container = new ContainerBuilder();
         $container->setParameter('kernel.default_locale', 'cs');
         $loader = new JKMoneyExtension();
-        $config = [];
+        $config = ['currency' => 'USD'];
         $loader->load(array($config), $container);
         $this->assertTrue($container->hasDefinition('JK\MoneyBundle\Twig\MoneyExtension'));
     }
