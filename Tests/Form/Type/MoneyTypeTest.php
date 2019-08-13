@@ -17,7 +17,7 @@ use Locale;
  */
 class MoneyTypeTest extends TypeTestCase
 {
-	protected function setUp()
+	protected function setUp(): void
 	{
 		// we test against different locales, so we need the full
 		// implementation

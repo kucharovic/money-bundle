@@ -11,7 +11,7 @@ use Locale;
 
 class MoneyExtensionTest extends TestCase
 {
-	public function setUp()
+	public function setUp(): void
 	{
 		IntlTestHelper::requireFullIntl($this, false);
 		parent::setUp();
