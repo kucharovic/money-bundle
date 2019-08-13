@@ -4,26 +4,24 @@ namespace JK\MoneyBundle\Tests\DependencyInjection;
 
 use PHPUnit\Framework\TestCase;
 use JK\MoneyBundle\DependencyInjection\JKMoneyExtension;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
 
 class JKMoneyExtensionTest extends TestCase
 {
-	/**
-	 * @expectedException \Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException
-	 */
 	public function testParameterNotFoundException()
 	{
+		$this->expectException(ParameterNotFoundException::class);
 		$container = new ContainerBuilder();
 		$loader = new JKMoneyExtension();
 		$config = [];
 		$loader->load(array($config), $container);
 	}
 
-	/**
-	 * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
-	 */
 	public function testInvalidConfigurationException()
 	{
+		$this->expectException(InvalidConfigurationException::class);
 		$container = new ContainerBuilder();
 		$container->setParameter('kernel.default_locale', 'xx');
 		$loader = new JKMoneyExtension();
