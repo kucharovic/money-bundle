@@ -7,6 +7,7 @@ use JK\MoneyBundle\Twig\MoneyExtension;
 use Symfony\Component\Intl\Util\IntlTestHelper;
 use Money\Money;
 use Money\Currency;
+use Twig\TwigFilter;
 use Locale;
 
 class MoneyExtensionTest extends TestCase
@@ -21,7 +22,7 @@ class MoneyExtensionTest extends TestCase
 		$extension = new MoneyExtension('cs_CZ');
 
 		$this->assertEquals(
-			[new \Twig_SimpleFilter('money', [$extension, 'moneyFilter'])],
+			[new TwigFilter('money', [$extension, 'moneyFilter'])],
 			$extension->getFilters()
 		);
 	}
