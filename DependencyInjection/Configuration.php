@@ -16,51 +16,51 @@ use ResourceBundle;
  */
 class Configuration implements ConfigurationInterface
 {
-	/** @var string **/
-	private $currencyCode;
+    /** @var string **/
+    private $currencyCode;
 
-	/**
-	 * @param string $locale Locale for currency code
-	 */
-	public function  __construct($locale)
-	{
-		$locales = class_exists(ResourceBundle::class)
-			? ResourceBundle::getLocales('')
-			: Intl::getLanguageBundle()->getLocales();
+    /**
+     * @param string $locale Locale for currency code
+     */
+    public function  __construct($locale)
+    {
+        $locales = class_exists(ResourceBundle::class)
+            ? ResourceBundle::getLocales('')
+            : Intl::getLanguageBundle()->getLocales();
 
-		if (false === in_array($locale, $locales)) {
-			throw new InvalidConfigurationException("Locale '$locale' is not valid.");
-		}
+        if (false === in_array($locale, $locales)) {
+            throw new InvalidConfigurationException("Locale '$locale' is not valid.");
+        }
 
-		if (2 == strlen($locale)) {
-			// Default US dollars
-			$locale .= '_US';
-		}
+        if (2 == strlen($locale)) {
+            // Default US dollars
+            $locale .= '_US';
+        }
 
-		$formatter = new NumberFormatter($locale, NumberFormatter::CURRENCY);
-		$this->currencyCode = $formatter->getTextAttribute(NumberFormatter::CURRENCY_CODE);
-	}
+        $formatter = new NumberFormatter($locale, NumberFormatter::CURRENCY);
+        $this->currencyCode = $formatter->getTextAttribute(NumberFormatter::CURRENCY_CODE);
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getConfigTreeBuilder()
-	{
-		$treeBuilder = new TreeBuilder('jk_money');
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfigTreeBuilder()
+    {
+        $treeBuilder = new TreeBuilder('jk_money');
 
-		if (method_exists($treeBuilder, 'getRootNode')) {
-			$rootNode = $treeBuilder->getRootNode();
-		} else {
-			// BC layer for symfony/config 4.1 and older
-			$rootNode = $treeBuilder->root('jk_money');
-		}
+        if (method_exists($treeBuilder, 'getRootNode')) {
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $rootNode = $treeBuilder->root('jk_money');
+        }
 
-		$rootNode
-			->children()
-				->scalarNode('currency')->defaultValue($this->currencyCode)->end()
-			->end();
-		;
+        $rootNode
+            ->children()
+                ->scalarNode('currency')->defaultValue($this->currencyCode)->end()
+            ->end();
+        ;
 
-		return $treeBuilder;
-	}
+        return $treeBuilder;
+    }
 }
