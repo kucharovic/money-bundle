@@ -32,7 +32,7 @@ class JKMoneyExtension extends Extension implements PrependExtensionInterface
 			$formType->replaceArgument(0, $config['currency']);
 		}
 
-		if (interface_exists('Twig_ExtensionInterface')) {
+		if (interface_exists('Twig\Extension\ExtensionInterface')) {
 			$twigExtension = $container->getDefinition('JK\MoneyBundle\Twig\MoneyExtension');
 			$twigExtension->replaceArgument(0, $locale);
 		}

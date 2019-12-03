@@ -2,19 +2,20 @@
 
 namespace JK\MoneyBundle\Twig;
 
-use Twig_Extension, Twig_SimpleFilter;
 use NumberFormatter, Locale;
 use Money\Money;
 use Money\Currencies\ISOCurrencies;
 use Money\Formatter\IntlMoneyFormatter;
 use Money\Formatter\DecimalMoneyFormatter;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
 /**
  * This class contains the configuration information for the bundle.
  *
  * @author Jakub Kucharovic <jakub@kucharovic.cz>
  */
-class MoneyExtension extends Twig_Extension
+class MoneyExtension extends AbstractExtension
 {
 	const FORMAT_CURRENCY = true;
 	const FORMAT_DECIMAL  = false;
@@ -32,7 +33,7 @@ class MoneyExtension extends Twig_Extension
 	public function getFilters()
 	{
 		return [
-			new Twig_SimpleFilter('money', [$this, 'moneyFilter']),
+			new TwigFilter('money', [$this, 'moneyFilter']),
 		];
 	}
 
