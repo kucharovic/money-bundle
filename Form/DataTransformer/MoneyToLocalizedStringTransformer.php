@@ -69,7 +69,7 @@ class MoneyToLocalizedStringTransformer extends NumberToLocalizedStringTransform
      *
      * @param string $value Localized money string
      *
-     * @return \Money\Money Money object
+     * @return \Money\Money|null Money object
      *
      * @throws TransformationFailedException If the given value is not a string
      *                                       or if the value can not be transformed.
@@ -78,11 +78,14 @@ class MoneyToLocalizedStringTransformer extends NumberToLocalizedStringTransform
     {
         $value = parent::reverseTransform($value);
 
+        if (null === $value) {
+            return null;
+        }
+
         $moneyParser = new DecimalMoneyParser($this->currencies);
 
         try {
-            $money = $moneyParser->parse(sprintf('%.53f', $value), $this->currency);
-            return $money;
+            return $moneyParser->parse(sprintf('%.53f', $value), $this->currency);
         } catch (ParserException $e) {
             throw new TransformationFailedException($e->getMessage());
         }

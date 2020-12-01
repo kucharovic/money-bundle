@@ -52,6 +52,16 @@ class MoneyToLocalizedStringTransformerTest extends TestCase
         $this->assertEquals($output, $transformer->transform($input));
     }
 
+    public function testDataTransformEmptyInput()
+    {
+        IntlTestHelper::requireFullIntl($this, false);
+
+        Locale::setDefault('en_US');
+        $transformer = new MoneyToLocalizedStringTransformer(new Currency('USD'), 2, true);
+
+        $this->assertEquals('', $transformer->transform(null));
+    }
+
     /**
      * @dataProvider dataProvider
      */
@@ -65,5 +75,15 @@ class MoneyToLocalizedStringTransformerTest extends TestCase
         $input = new Money($input, $currency);
 
         $this->assertEquals($input, $transformer->reverseTransform($output));
+    }
+
+    public function testDataReverseTransformEmptyInput()
+    {
+        IntlTestHelper::requireFullIntl($this, false);
+
+        Locale::setDefault('en_US');
+        $transformer = new MoneyToLocalizedStringTransformer(new Currency('USD'), 2, true);
+
+        $this->assertNull($transformer->reverseTransform(''));
     }
 }
