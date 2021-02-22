@@ -21,7 +21,7 @@ class JKMoneyExtension extends Extension implements PrependExtensionInterface
     public function load(array $configs, ContainerBuilder $container)
     {
         $locale = $container->getParameter('kernel.default_locale');
-        $configuration = new Configuration($locale);
+        $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));

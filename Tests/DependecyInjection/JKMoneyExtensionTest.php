@@ -19,13 +19,16 @@ class JKMoneyExtensionTest extends TestCase
         $loader->load(array($config), $container);
     }
 
-    public function testInvalidConfigurationException()
+    public function testLoadWithMissingCurrencyValue()
     {
-        $this->expectException(InvalidConfigurationException::class);
         $container = new ContainerBuilder();
-        $container->setParameter('kernel.default_locale', 'xx');
+        $container->setParameter('kernel.default_locale', 'cs');
         $loader = new JKMoneyExtension();
         $config = [];
+
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('The child config "currency" under "jk_money" must be configured.');
+
         $loader->load(array($config), $container);
     }
 
@@ -37,7 +40,7 @@ class JKMoneyExtensionTest extends TestCase
         $container = new ContainerBuilder();
         $container->setParameter('kernel.default_locale', 'cs');
         $loader = new JKMoneyExtension();
-        $config = [];
+        $config = ['currency' => 'USD'];
         $loader->load(array($config), $container);
         $this->assertTrue($container->hasDefinition('JK\MoneyBundle\Form\Type\MoneyType'));
     }
@@ -50,7 +53,7 @@ class JKMoneyExtensionTest extends TestCase
         $container = new ContainerBuilder();
         $container->setParameter('kernel.default_locale', 'cs');
         $loader = new JKMoneyExtension();
-        $config = [];
+        $config = ['currency' => 'USD'];
         $loader->load(array($config), $container);
         $this->assertTrue($container->hasDefinition('JK\MoneyBundle\Twig\MoneyExtension'));
     }
