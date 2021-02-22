@@ -27,7 +27,7 @@ class JKMoneyExtensionTest extends TestCase
         $config = [];
 
         $this->expectException(InvalidConfigurationException::class);
-        $this->expectExceptionMessage('The child node "currency" at path "jk_money" must be configured.');
+        $this->expectExceptionMessage('The child config "currency" under "jk_money" must be configured.');
 
         $loader->load(array($config), $container);
     }
