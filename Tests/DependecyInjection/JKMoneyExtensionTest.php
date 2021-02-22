@@ -34,7 +34,7 @@ class JKMoneyExtensionTest extends TestCase
 
     public function testLoadFormConfiguration()
     {
-        if (false === interface_exists('Twig_ExtensionInterface')) {
+        if (false === interface_exists('Twig\Extension\ExtensionInterface')) {
             $this->markTestSkipped('Package `twig/twig` is not available.');
         }
         $container = new ContainerBuilder();
