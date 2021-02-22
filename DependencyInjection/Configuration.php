@@ -12,20 +12,19 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getConfigTreeBuilder()
-	{
-		$treeBuilder = new TreeBuilder('jk_money');
-		$rootNode = $treeBuilder->getRootNode();
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfigTreeBuilder()
+    {
+        $treeBuilder = new TreeBuilder('jk_money');
+        $rootNode = $treeBuilder->getRootNode();
 
-		$rootNode
-			->children()
-				->scalarNode('currency')->isRequired()->end()
-			->end();
-		;
+        $rootNode
+            ->children()
+                ->scalarNode('currency')->isRequired()->end()
+            ->end();
 
-		return $treeBuilder;
-	}
+        return $treeBuilder;
+    }
 }
