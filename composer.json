@@ -15,8 +15,8 @@
   "license": "MIT",
   "authors": [
     {
-        "name": "Jakub Kucharovic",
-        "email": "jakub@kucharovic.cz"
+      "name": "Jakub Kucharovic",
+      "email": "jakub@kucharovic.cz"
     }
   ],
   "autoload": {
@@ -32,14 +32,14 @@
     "twig/twig": "<1.34|>=2.0,<2.4"
   },
   "require": {
-    "php": "^7.1",
+    "php": "^7.1 || ^8.0",
     "ext-intl": "*",
     "symfony/framework-bundle": "^3.0 || ^4.0 || ^5.0",
     "doctrine/orm": "^2.5",
     "moneyphp/money": "^3.1"
   },
   "require-dev": {
-    "phpunit/phpunit": "^7.0",
+    "phpunit/phpunit": "^9.0",
     "symfony/form": "^3.0 || ^4.0 || ^5.0",
     "twig/twig": "^1.30 || ^2.0 || ^3.0"
   },
@@ -49,7 +49,7 @@
   },
   "extra": {
     "branch-alias": {
-        "dev-master": "1.3-dev"
+      "dev-master": "1.3-dev"
     }
   }
 }
